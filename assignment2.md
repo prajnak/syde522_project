@@ -7,7 +7,11 @@ Since all these operations were done in MATLAB 2015a, which did not have a defau
 
 #### MSE for hideen layer sizes 512 and 256
 The performance(MSE) of this autoencoder is shown in the plot below:
+
+##### Hidden layer size 512
 ![MSE peformance for hidden layer size = 512](hl_512_mse.png)
+
+##### Hidden layer size 256
 ![MSE peformance for hidden layer size = 256](hl_256_mse.png)
 
 #### Error Histograms for hidden layer sizes 512 and 256
