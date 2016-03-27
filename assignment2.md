@@ -20,9 +20,11 @@ The outputs were then predicted using the trained network. A comparision between
 ![Comparision of output](hl_512_out_in.png)
 ![Comparision of output](hl_256_out_in.png)
 
+#### MSE vs Hidden layer sizes
 The following plot shows the bahvior of the autoencoder's MSE as a function of its hidden layer size. As is visible in the plot, the MSE decreases significantly as the size of the hidden layer size.
 ![MSE with hidden layer size](mse_vs_hl.png)
 
+#### Training Times vs Hidden layer sizes
 The following plot shows the change in training times as a function of the hidden layer size. Its obvious that the taining time increases as the size of the hidden layer increases and the relationship is exponential.
 ![Training time with hidden layer size](time_vs_hl.png)
 
