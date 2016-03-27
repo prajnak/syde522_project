@@ -2,7 +2,7 @@
 ## Autoencoding Histo-pathology images
 The images were downloaded from learn and loaded into MATLAB. They were then converted into 32x32 grayscale images. 
 
-Since all these operations were done in MATLAB 2015a, which did not have a default implementation of the autoencoder class, a feedforwardnet was created and configured with a single hidden layer of varying sizes starting at 1024/2, where 1024 = 32x32. The activation functions used in the hidden layer and the output layer was a tangential sigmoid function. The same network resulted in much lower MSE when configured with a 'tansig' as opposed to a 'logsig' activation function.
+Since all these operations were done in MATLAB 2015a, which did not have a default implementation of the autoencoder class, a feedforwardnet was created and configured with a single hidden layer of varying sizes starting at 1024/2, where 1024 = 32x32. The activation functions used in the hidden layer and the output layer was a tangential sigmoid function. The same network resulted in much lower MSE when configured with a 'tansig' as opposed to a 'logsig' activation function. The 'hidden layer size' used in the rest of the report refers to the number of neurons in the single hidden layer of the autoencoder
 ### Autoencoder with varying hidden layer sizes
 
 #### MSE for hideen layer sizes 512 and 256
