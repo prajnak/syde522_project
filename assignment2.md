@@ -71,9 +71,11 @@ The plot below shows how the error histogram for this network. As is visible in 
 ![Comparision of output](noise_hl_256_out_in.png)
 
 #### MSE vs Hidden layer sizes
+The plot below shows MSE for both types of encoders trained in this assignment. The denoising autoencoder was trained on a set of noised images and with training targets being the original denoised images. The MSE was calculated on the network's prediction to the denoised input
 ![mse denoise](noise_mse_hl.png)
 
 #### Training Times vs Hidden layer sizes
+The plot below shows training times for normal and denoising autoencoder.
 ![training times denoise](noise_time_hl.png)
 
 #### regression fit for hidden layer size = 256
