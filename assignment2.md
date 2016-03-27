@@ -40,8 +40,10 @@ The following plots show the variation in MSE with each epoch for networks with 
 #### Error Histograms for hideen layer sizes 512 and 256
 The plot below shows how the error histogram for this network. As is visible in the histograms, most of the errors happened very close to zero.
 
+##### Hidden layer size 512
 ![Error Histogram for hidden layer size = 512](noise_hl_512_error.png)
 
+##### Hidden layer size 256
 ![Error Histogram for hidden layer size = 256](noise_hl_256_error.png)
 
 #### Comparision of network outputs for hidden layer sizes 512 and 256
