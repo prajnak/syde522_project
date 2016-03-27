@@ -14,4 +14,5 @@ The outputs were then predicted using the trained network. A comparision between
 ![Comparision of output](hl_52_out_in.png)
 ![Comparision of output](hl_256_out_in.png)
 
-The following plot shows the bahvior of the autoencoder's MSE as a function of its hidden layer size. As is visible in the plot, the MSE decreases significantly as the size of the hidden layer size. 
+The following plot shows the bahvior of the autoencoder's MSE as a function of its hidden layer size. As is visible in the plot, the MSE decreases significantly as the size of the hidden layer size.
+![MSE with hidden layer size](mse_vs_hl.png)
