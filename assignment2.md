@@ -76,6 +76,7 @@ The plot below shows MSE for both types of encoders trained in this assignment. 
 
 #### Training Times vs Hidden layer sizes
 The plot below shows training times for normal and denoising autoencoder. It is to be noted here that the training times are effectively doubled at each layer size because of the increase in epoch size from 600 to 1200. As is expected, training times are still exponentially dependent on the hidden layer size.
+
 ![training times denoise](noise_time_hl.png)
 
 #### regression fit for hidden layer size = 256
