@@ -75,4 +75,6 @@ The plot below shows how the error histogram for this network. As is visible in 
 
 #### Training Times vs Hidden layer sizes
 ![training times denoise](noise_time_hl.png)
+
 #### regression fit for hidden layer size = 256
+![regrr fit](noise_hl_256_rfit.png)
