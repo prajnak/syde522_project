@@ -4,6 +4,8 @@ The images were downloaded from learn and loaded into MATLAB. They were then con
 
 Since all these operations were done in MATLAB 2015a, which did not have a default implementation of the autoencoder class, a feedforwardnet was created and configured with a single hidden layer of varying sizes starting at 1024/2, where 1024 = 32x32. The activation functions used in the hidden layer and the output layer was a tangential sigmoid function. The same network resulted in much lower MSE when configured with a 'tansig' as opposed to a 'logsig' activation function.
 ### Autoencoder with varying hidden layer sizes
+
+#### MSE for hideen layer sizes 512 and 256
 The performance(MSE) of this autoencoder is shown in the plot below:
 ![MSE peformance for hidden layer size = 512](hl_512_mse.png)
 ![MSE peformance for hidden layer size = 256](hl_256_mse.png)
