@@ -8,6 +8,7 @@ The performance(MSE) of this autoencoder is shown in the plot below:
 
 The plot below shows how the error histogram for this network. As is visible in the histograms, most of the errors happened very close to zero.
 ![Error Histogram for hidden layer size = 512](hl_512_error.png)
+![Error Histogram for hidden layer size = 256](hl_256_error.png)
 
 The outputs were then predicted using the trained network. A comparision between the original image and the image predicted by the network is shown below:
 ![Error Histogram for hidden layer size = 512](hl_52_out_in.png)
