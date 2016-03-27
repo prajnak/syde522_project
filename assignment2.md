@@ -79,4 +79,5 @@ The plot below shows training times for normal and denoising autoencoder. It is 
 ![training times denoise](noise_time_hl.png)
 
 #### regression fit for hidden layer size = 256
+This plot shows the performance of the denoising autoencoder at predicting a noiseless input using 256 neurons in the hidden layer
 ![regrr fit](noise_hl_256_rfit.png)
