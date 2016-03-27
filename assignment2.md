@@ -29,3 +29,4 @@ The following plot shows the change in training times as a function of the hidde
 ![Training time with hidden layer size](time_vs_hl.png)
 
 ### Denoising Autoencoder with varying hidden layer sizes
+Each of the images was modified by adding speckle noise. The noised images were then used to train the same network used above, except that the number of epochs for the training phase was doubled from 600 to 1200
