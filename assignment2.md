@@ -12,4 +12,4 @@ The plot below shows how the error histogram for this network. As is visible in 
 
 The outputs were then predicted using the trained network. A comparision between the original image and the image predicted by the network is shown below:
 ![Comparision of output](hl_52_out_in.png)
-![Comparision of output](hl_52_out_in.png)
+![Comparision of output](hl_256_out_in.png)
