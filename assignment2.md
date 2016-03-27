@@ -12,12 +12,20 @@ The performance(MSE) of this autoencoder is shown in the plot below:
 
 #### Error Histograms for hidden layer sizes 512 and 256
 The plot below shows how the error histogram for this network. As is visible in the histograms, most of the errors happened very close to zero.
+
+##### Hidden layer size 512
 ![Error Histogram for hidden layer size = 512](hl_512_error.png)
+
+##### Hidden layer size 256
 ![Error Histogram for hidden layer size = 256](hl_256_error.png)
 
 #### Comparision of network outputs for hidden layer sizes 512 and 256
 The outputs were then predicted using the trained network. A comparision between the original image and the image predicted by the network is shown below:. The first set of 2 images compares the results for hidden layer size of 512 while the second set of 2 images is for a hidden layer size of 256. The values of the MSE have increased when the size of the hidden layer was decreased. This makes complete sense as there are lesser weights available to modify the behavior of the hidden layer to match that of the desired targets.
+
+##### Hidden layer size 512
 ![Comparision of output](hl_512_out_in.png)
+
+##### Hidden layer size 256
 ![Comparision of output](hl_256_out_in.png)
 
 #### MSE vs Hidden layer sizes
@@ -33,8 +41,11 @@ Each of the images was modified by adding speckle noise. The noised images were 
 
 #### MSE for hidden layer sizes 512 and 256
 The following plots show the variation in MSE with each epoch for networks with the hidden layer sizes of 512 and 256
+
+##### Hidden layer size 512
 ![MSE vs epoch # for a denoising Autoencoder HL size = 512](noise_hl_512_mse.png)
 
+##### Hidden layer size 256
 ![MSE vs epoch # for a denoising Autoencoder HL size = 256](noise_hl_256_mse.png)
 
 #### Error Histograms for hideen layer sizes 512 and 256
