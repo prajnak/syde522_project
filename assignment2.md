@@ -1,6 +1,8 @@
 # SYDE 522 Assignment 2
 ## Autoencoding Histo-pathology images
-The images were downloaded from learn and loaded into MATLAB. They were then converted into 32x32 grayscale images. Since all these operations were done in MATLAB 2015a, which did not have a default implementation of the autoencoder class, a feedforwardnet was created and configured with a single hidden layer of varying sizes starting at 1024/2, where 1024 = 32x32.
+The images were downloaded from learn and loaded into MATLAB. They were then converted into 32x32 grayscale images. 
+
+Since all these operations were done in MATLAB 2015a, which did not have a default implementation of the autoencoder class, a feedforwardnet was created and configured with a single hidden layer of varying sizes starting at 1024/2, where 1024 = 32x32. The activation functions used in the hidden layer and the output layer was a tangential sigmoid function. The same network resulted in much lower MSE when configured with a 'tansig' as opposed to a 'logsig' activation function.
 ### Autoencoder with varying hidden layer sizes
 The performance(MSE) of this autoencoder is shown in the plot below:
 ![MSE peformance for hidden layer size = 512](hl_512_mse.png)
@@ -20,4 +22,4 @@ The following plot shows the bahvior of the autoencoder's MSE as a function of i
 The following plot shows the change in training times as a function of the hidden layer size. Its obvious that the taining time increases as the size of the hidden layer increases and the relationship is exponential.
 ![Training time with hidden layer size](time_vs_hl_1.png)
 
-### Autoencoder with 
+### Denoising Autoencoder with varying hidden  
