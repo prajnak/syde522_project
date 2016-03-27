@@ -71,7 +71,8 @@ The plot below shows how the error histogram for this network. As is visible in 
 ![Comparision of output](noise_hl_256_out_in.png)
 
 #### MSE vs Hidden layer sizes
+![mse denoise](noise_mse_hl.png)
 
 #### Training Times vs Hidden layer sizes
-
+![training times denoise](noise_time_hl.png)
 #### regression fit for hidden layer size = 256
