@@ -4,4 +4,5 @@ The images were downloaded from learn and loaded into MATLAB. They were then con
 ### Autoencoder with hidden layer size = 1024/2
 The performance(MSE) of this autoencoder is shown in the plot below:
 []![MSE peformance for hidden layer size = 512](hl_512_mse.png)
-[]![MSE peformance for hidden layer size = 512](hl_512_error.png) 	hl_512_error.png
+The plot below shows how the error histogram for this network. As is visible in the histograms, most of the errors happened
+[]![MSE peformance for hidden layer size = 512](hl_512_error.png)
