@@ -40,6 +40,9 @@ The following plot shows the bahvior of the autoencoder's MSE as a function of i
 The following plot shows the change in training times as a function of the hidden layer size. Its obvious that the taining time increases as the size of the hidden layer increases and the relationship is exponential.
 ![Training time with hidden layer size](time_vs_hl.png)
 
+#### regression fit for hidden layer size = 256
+![regression fit](hl_256_rfit.png)
+
 ### Denoising Autoencoder with varying hidden layer sizes
 Each of the images was modified by adding speckle noise. The noised images were then used to train the same network used above, except that the number of epochs for the training phase was doubled from 600 to 1200. 
 
