@@ -69,3 +69,7 @@ The plot below shows how the error histogram for this network. As is visible in 
 ![Comparision of output](noise_hl_512_out_in.png)
 
 ![Comparision of output](noise_hl_256_out_in.png)
+
+#### MSE vs Hidden layer sizes
+
+#### Training Times vs Hidden layer sizes
