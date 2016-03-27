@@ -86,4 +86,4 @@ This plot shows the performance of the denoising autoencoder at predicting a noi
 ![regrr fit](noise_hl_256_rfit.png)
 
 ### Conclusion
-It seems like denoising autoencoders are very useful for
+It seems like denoising autoencoders are very useful for lossy compression and optimization. One kind of autoencoders not evaluated in this assignment are overcomplete autoencoders, in which the hidden layer has more units than the input later. A few researchers have reported that overcomplete networks will tend to yield more useful representations at the hidden layer (use is determined by the amount of classification error).
