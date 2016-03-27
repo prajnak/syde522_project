@@ -73,3 +73,5 @@ The plot below shows how the error histogram for this network. As is visible in 
 #### MSE vs Hidden layer sizes
 
 #### Training Times vs Hidden layer sizes
+
+#### regression fit for hidden layer size = 256
