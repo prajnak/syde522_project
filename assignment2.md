@@ -66,9 +66,9 @@ The plot below shows how the error histogram for this network. As is visible in 
 
 #### Comparision of network outputs for hidden layer sizes 512 and 256
 The autoencoder performed extremely well at getting rid of the added speckle noise from the input. This confirms the main application of a denoising autoencoder, i.e., letting the network loearn the input from a corrupted version of the input itself results in better predictive ability of the network to puse more robust features to represent the inputs in the hidden layers
-![Comparision of output](noise_hl_512_out_in.png)
+![Comparision of output](noisy_512_out_in.png)
 
-![Comparision of output](noise_hl_256_out_in.png)
+![Comparision of output](noisy_256_out_in.png)
 
 #### MSE vs Hidden layer sizes
 The plot below shows MSE for both types of encoders trained in this assignment. The denoising autoencoder was trained on a set of noised images and with training targets being the original denoised images. The MSE was calculated on the network's prediction to the denoised input. As is visible, the performance of this denoising autoencoder for smaller hidden layer sizes was a lot better than the normal autoencoder
