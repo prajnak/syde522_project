@@ -65,7 +65,7 @@ The plot below shows how the error histogram for this network. As is visible in 
 ![Error Histogram for hidden layer size = 256](noise_hl_256_error.png)
 
 #### Comparision of network outputs for hidden layer sizes 512 and 256
-The autoencoder performed extremely well at getting rid of the added speckle noise from the input. This confirms the main application of a denoising autoencoder, i.e., letting the network learn the input from a corrupted version of the input itself results in better predictive ability of the network to puse more robust features to represent the inputs in the hidden layers
+The autoencoder performed extremely well at getting rid of the added speckle noise from the input. This confirms the main application of a denoising autoencoder, i.e., letting the network learn the input from a corrupted version of the input itself results in better predictive ability of the network to use more robust features to represent the inputs in the hidden layers
 ![Comparision of output](noisy_512_out_in.png)
 
 ![Comparision of output](noisy_256_out_in.png)
