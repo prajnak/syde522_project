@@ -4,6 +4,7 @@ library(dplyr)
 library(readr)
 
 library(WDI)
+library(rWBclimate)
 
 area_principal_crops_rice = Quandl("MOSPI/AREA_PRINCPL_CROPS_8_2_RICE",
                                    api_key="Q_zK1Gdy59wWp8Bkh9wH")
@@ -42,18 +43,20 @@ raw_dat = readLines('rawdata/india75.cfm')
 install.packages('rWBclimate')
 install.packages('WDI')
 
-WDIsearch('rainfall')
-
-df_cereal = data.frame()
-
-cereal_yield = WDI(indicator = 'AG.YLD.CREL.KG', country = c('IN'), start = 1960, end = 2013)
-
-cereal_land = WDI(indicator = 'AG.LND.CREL.HA', country = c('IN'), start = 1960, end = 2013)
+WDIsearch('maize')
+## read in data for cereal yield
+cereal_yield = WDI(indicator = 'AG.YLD.CREL.KG', country = c('IN'),
+                   start = 1960, end = 2013)
+cereal_land = WDI(indicator = 'AG.LND.CREL.HA', country = c('IN'),
+                  start = 1960, end = 2013)
 head(cereal_land)
+
+table(WDI(indicator = 'AG.CRP.MZE.CD')$country)
 
 f = ggplot(data = cereal_yield, aes(year, AG.YLD.CREL.KG))
 f+geom_line() + ggtitle('Cereal Yield in India from 1960-2013')
 
+## concat all yield, area under land into a single dataframe
 df_cereal = data.frame(cereal_land$AG.LND.CREL.HA)
 colnames(df_cereal) = c('land')
 df_cereal$year = cereal_yield$year
