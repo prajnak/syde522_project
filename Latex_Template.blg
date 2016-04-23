@@ -1,0 +1,63 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: Latex_Template.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: Latex_Template.bib.bib
+"{" immediately follows a field name---line 32 of file Latex_Template.bib.bib
+ : @Manual
+ :        {apppred2014,
+I'm skipping whatever remains of this entry
+-- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty journal in Rauff2015
+Warning--empty author in Shi2013
+
+Done.
+You've used 8 entries,
+            4039 wiz_defined-function locations,
+            869 strings with 8953 characters,
+and the built_in function-call counts, 6869 in all, are:
+= -- 595
+> -- 139
+< -- 73
++ -- 81
+- -- 20
+* -- 355
+:= -- 1050
+add.period$ -- 16
+call.type$ -- 8
+change.case$ -- 7
+chr.to.int$ -- 156
+cite$ -- 10
+duplicate$ -- 469
+empty$ -- 481
+format.name$ -- 26
+if$ -- 1561
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 73
+newline$ -- 53
+num.names$ -- 7
+pop$ -- 138
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 544
+stack$ -- 0
+substring$ -- 381
+swap$ -- 425
+text.length$ -- 21
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 8
+warning$ -- 2
+while$ -- 32
+width$ -- 9
+write$ -- 113
+(There was 1 error message)
