@@ -127,7 +127,12 @@ bwplot(resamp, scales="free")
 dotplot(resamp, scales="free")
 parallelplot(resamp, metric="RMSE")
 
-stargazer(marsModel)
+
+ggplot(varImp(marsModel))
+ggsave("mars_varimp.png", width=5, height=3, dpi=200, units="in")
+
+ggplot(varImp(avNNetModel))
+ggsave("avgnn_varimp.png", width=5, height=3, dpi=200, units="in")
 
 ## install.packages('forecast')
 library(neuralnet)

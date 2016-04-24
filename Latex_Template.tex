@@ -537,14 +537,23 @@ MARS is a form of regression analysis introduced by Jerome H. Friedman in 1991. 
 MARS models may also be evaluated using the standard regression measures RMSE and the coefficient of determination, $R^2$
 
 \section{Results and Discussion}
-\subsection{Results}
-Figures \ref{res:ann_tune} and \ref{res:ann_train} show the parameter tuning performance and training performance of the neural network used on the dataset. As can be seen, the model fits the training data pretty good with RMSE errors staying pretty low and the coefficient of regression fit, $R^2$, at around 0.98. One might be inclined to argue that such good of a fit might point towards over-fitting, which would very well have been true if not for the k-fold cross validation used during the training process which ensures none of the model parameters have been chosen to account for a specific data point
+% \subsection{Results}
+Figures \ref{res:ann_tune} and \ref{res:ann_train} show the parameter tuning performance and training performance of the neural network used on the dataset. The NN model had its best performance with 5 hidden layer neurons and a weight decay of 0.1. The MARS model 
+
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.5\textwidth]{avgnnet_rsqr.png}
     \caption{Parameter tuning results for Neural network}
     \label{res:ann_tune}
 \end{figure}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{mars_rsqr.png}
+    \caption{Parameter tuning results for MARS}
+    \label{res:mars_tune}
+\end{figure}
+
+As can be seen in Figures \ref{res:ann_train} and \ref{res:mars_train}, both models fit the training data well with RMSE errors staying pretty low and the coefficient of regression fit, $R^2$, at around 0.98. One might be inclined to argue that such good of a fit might point towards over-fitting, which would very well have been true if not for the k-fold cross validation used during the training process which ensures none of the model parameters have been biased for a specific data point.
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.5\textwidth]{avgnnet_training.png}
@@ -558,12 +567,7 @@ Figures \ref{res:ann_tune} and \ref{res:ann_train} show the parameter tuning per
     \label{res:ann_test}
 \end{figure}
 
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{mars_rsqr.png}
-    \caption{Parameter tuning results for MARS}
-    \label{res:mars_tune}
-\end{figure}
+Figures \ref{res:ann_test} and \ref{res:mars_test} show the prediction accuracy of the models on the validation dataset. Once again, the predictions closely followed the actual values proving the efficacy of these models in predicting crop yield.
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.5\textwidth]{mars_training.png}
@@ -576,8 +580,8 @@ Figures \ref{res:ann_tune} and \ref{res:ann_train} show the parameter tuning per
     \caption{Validation results for MARS}
     \label{res:mars_test}
 \end{figure}
-\clearpage
-The following tables summarize the RMSE and $R^2$ results for the training (Table \ref{tab:res_train}) and testing (Table \ref{tab:res_test}) data-splits for both MARS and Neural Networks. As is obvious from them, both models had extremely similar performance in fitting the validation data to the model. The low RMSE values, which range from 4-8\% of the mean yield value, indicate really good performance for these models. 
+% \clearpage
+The RMSE and $R^2$ results for the training, Table \ref{tab:res_train}, and testing, Table \ref{tab:res_test}, data-splits for both MARS and Neural Networks have been provided. As is obvious from them, both models had extremely similar performance in fitting the validation data to the model. The low RMSE values, which range from 4-8\% of the mean yield value, indicate really good performance for these models. 
 %latex.default(res_training, file = "train_results.tex")%
 \begin{table}[!tbp]
 \begin{center}
@@ -589,8 +593,8 @@ AvgNN&$71.8543768205759$&$0.986877633023676$\tabularnewline
 MARS&$41.7083829642748$&$0.995445879757786$\tabularnewline
 \hline
 \end{tabular}\end{center}
-\label{tab:res_train}
 \caption{RMSE and $R^2$ results for training}
+\label{tab:res_train}
 \end{table} 
 
 %latex.default(res_testing, file = "testing_results.tex")%
@@ -604,16 +608,35 @@ AvgNN&$105.0088152187575$&$0.975009493599273$\tabularnewline
 MARS&$ 95.1923222679583$&$0.981305690867502$\tabularnewline
 \hline
 \end{tabular}\end{center}
-\label{tab:res_test}
 \caption{RMSE and $R^2$ results for testing}
+\label{tab:res_test}
 \end{table}
 
 \section{Summary and Conclusions}
-In conclusion, we found that the models trained here, based on neural networks and Multiple Adaptive Regressive Splines, 
+In conclusion, we found that the models trained here, based on neural networks and Multiple Adaptive Regressive Splines, were able to accurately represent the behavior of the annual crop yields for cereals in India. An assessment of the variables deemed to be important by these models is provided in Figures \ref{res:mars_imp} and \ref{res:avgnn_imp}.
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{mars_varimp.png}
+    \caption{Important variables in MARS model}
+    \label{res:mars_imp}
+\end{figure}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{avgnn_varimp.png}
+    \caption{Important variables in NN model}
+    \label{res:avgnn_imp}
+\end{figure}
+
+These results indicate that the year variable was most important in predicting future crop yields. This makes sense when one can think about the year acting as a proxy for the actual factor driving crop yield higher every year - population. It would be very interesting to run the same analysis using country population instead of the year and verify this claim. Other noticeable aspects include the negligible importance of the rain variables in predicting crop yields. This maybe attributed to large regional variations in precipitation which are lost when one considers aggregated weather data at national scales. It is very likely that the regions responsible for most of the cereal production received much higher rainfall than represented by the seasonal mean values used in this study. 
+
+Previous works have suggested that climatic variables can account for most of the variations in crop yields. Lobell et al.(2010) found that the performance of statistical models differed by climate variable and spatial scale, with time-series statistical models ably reproducing site-specific yield response to precipitation change, but performing less well for temperature responses. The models based on multiple sites were also much less sensitive to the length of historical period used for training. For all three statistical approaches, the performance improved when individual sites were first aggregated to country-level averages. Results suggest that statistical models, as compared to CERES-Maize, represent a useful if imperfect tool for projecting future yield responses, with their usefulness higher at broader spatial scales. It is also at these broader scales that climate projections are most available and reliable, and therefore statistical models are likely to continue to play an important role in anticipating future impacts of climate change \cite{Lobell2010}.
+
+Thus, it is recommended that better national scale predictor aggregates be obtained primarily from the major regions responsible for cereal production in India, including temperature, rainfall and fertilizer intake to obtain much better results as suggested by Lobell et. al. Other recommendations include adding energy usage by the agricultural sector and irrigation levels, using techniques that allow extrapolation of missing data for the variables that were dropped during the data pre-processing stage of this study like agricultural machines and fertilizer uptake. Researchers have found fertilizer uptake, to be an especially useful factor for predicting crop yields as it is also linked to popular crop strains and breeding practices that may vary regionally. Gonzalez-Sanchez et. al found that M5-prime regression trees performed really well, which can be another model to build using this dataset \cite{Gonzalez-Sanchez2014}.
+
+Finally, it is necessary to point out that this work deals only with comparing the predictive accuracy of the above-mentioned techniques. Several factors like model structure, knowledge representation, implementation cost and training time affect the performance of machine learning techniques and further research needs to be done to compare the characteristics of the ML models with agricultural planning factors.
 % use section* for acknowledgement
 \section*{Acknowledgment}
-
-
+The author would like to thank H.R. Tizhoosh, Professor, Systems Design Engineering, University of Waterloo for his suggestions about ensuring enough data is available to perform the analysis conducted here but on a regional or smaller spatial scale. The original intent of this report was to use regional climate, soil and fertilizer data and perform analysis at a much smaller spatial scale with the same temporal scale. However, technical difficulties prevented such analyses and the spatial scale had to be increased to the national level to proceed.
 
 \bibliographystyle{IEEEtran}
 % \renewcommand{\bibname}{References}
