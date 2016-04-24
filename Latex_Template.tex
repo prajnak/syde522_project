@@ -613,6 +613,9 @@ MARS&$ 95.1923222679583$&$0.981305690867502$\tabularnewline
 \end{table}
 
 \section{Summary and Conclusions}
+\subsection{Software and code}
+All the code used to run the analysis and generate the relevant figures, etc., is available on github \cite{Prajna2016}. All the software was written using the statistical programming language R, and all visualizations were generated using the software package \emph{ggplot2}. All the analysis and model training was done using the package \emph{caret \cite{caret2016}}. The files \emph{explore.R} and \emph{analysis.R} document the exploratory and analytical portions of this study. All the figures in this study are completely reproducible using the code provided in the github repository at \url{https://github.com/prajnak/syde522_project}
+\subsection{Conclusions}
 In conclusion, we found that the models trained here, based on neural networks and Multiple Adaptive Regressive Splines, were able to accurately represent the behavior of the annual crop yields for cereals in India. An assessment of the variables deemed to be important by these models is provided in Figures \ref{res:mars_imp} and \ref{res:avgnn_imp}.
 \begin{figure}[!h]
     \centering
@@ -634,6 +637,7 @@ Previous works have suggested that climatic variables can account for most of th
 Thus, it is recommended that better national scale predictor aggregates be obtained primarily from the major regions responsible for cereal production in India, including temperature, rainfall and fertilizer intake to obtain much better results as suggested by Lobell et. al. Other recommendations include adding energy usage by the agricultural sector and irrigation levels, using techniques that allow extrapolation of missing data for the variables that were dropped during the data pre-processing stage of this study like agricultural machines and fertilizer uptake. Researchers have found fertilizer uptake, to be an especially useful factor for predicting crop yields as it is also linked to popular crop strains and breeding practices that may vary regionally. Gonzalez-Sanchez et. al found that M5-prime regression trees performed really well, which can be another model to build using this dataset \cite{Gonzalez-Sanchez2014}.
 
 Finally, it is necessary to point out that this work deals only with comparing the predictive accuracy of the above-mentioned techniques. Several factors like model structure, knowledge representation, implementation cost and training time affect the performance of machine learning techniques and further research needs to be done to compare the characteristics of the ML models with agricultural planning factors.
+
 % use section* for acknowledgement
 \section*{Acknowledgment}
 The author would like to thank H.R. Tizhoosh, Professor, Systems Design Engineering, University of Waterloo for his suggestions about ensuring enough data is available to perform the analysis conducted here but on a regional or smaller spatial scale. The original intent of this report was to use regional climate, soil and fertilizer data and perform analysis at a much smaller spatial scale with the same temporal scale. However, technical difficulties prevented such analyses and the spatial scale had to be increased to the national level to proceed.

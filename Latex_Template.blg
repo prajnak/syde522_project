@@ -19,45 +19,45 @@ Warning--empty journal in Rauff2015
 Warning--empty author in Shi2013
 
 Done.
-You've used 8 entries,
+You've used 17 entries,
             4039 wiz_defined-function locations,
-            869 strings with 8953 characters,
-and the built_in function-call counts, 6869 in all, are:
-= -- 595
-> -- 139
-< -- 73
-+ -- 81
-- -- 20
-* -- 355
-:= -- 1050
-add.period$ -- 16
-call.type$ -- 8
-change.case$ -- 7
-chr.to.int$ -- 156
-cite$ -- 10
-duplicate$ -- 469
-empty$ -- 481
-format.name$ -- 26
-if$ -- 1561
+            923 strings with 10463 characters,
+and the built_in function-call counts, 11276 in all, are:
+= -- 954
+> -- 239
+< -- 87
++ -- 132
+- -- 42
+* -- 540
+:= -- 1820
+add.period$ -- 31
+call.type$ -- 17
+change.case$ -- 19
+chr.to.int$ -- 186
+cite$ -- 19
+duplicate$ -- 819
+empty$ -- 849
+format.name$ -- 49
+if$ -- 2526
 int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 73
-newline$ -- 53
-num.names$ -- 7
-pop$ -- 138
+int.to.str$ -- 17
+missing$ -- 155
+newline$ -- 90
+num.names$ -- 15
+pop$ -- 330
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 544
+skip$ -- 887
 stack$ -- 0
-substring$ -- 381
-swap$ -- 425
-text.length$ -- 21
+substring$ -- 467
+swap$ -- 665
+text.length$ -- 25
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 8
+type$ -- 17
 warning$ -- 2
-while$ -- 32
-width$ -- 9
-write$ -- 113
+while$ -- 48
+width$ -- 19
+write$ -- 202
 (There was 1 error message)
