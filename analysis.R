@@ -43,22 +43,27 @@ avNNetPred = predict(avNNetModel, newdata=pred_train)
 avNNetPR = postResample(pred=avNNetPred, obs=yield_train)
 rmses_training = c(avNNetPR[1])
 r2s_training = c(avNNetPR[2])
-methods = c("AvgNN")
-avnnetPred_all = predict(avNNetModel, newdata=df_predictors)
-avnnetPR_all = postResample(pred=avnnetPred_all, obs = df_yield)
+
+methods = c("AvgNN", "MARS")
+avnnetPred_all = predict(avNNetModel, newdata=pred_test)
+avnnetPR_all = postResample(pred=avnnetPred_all, obs = yield_test)
 rmses_testing = c(avnnetPR_all[1])
 r2s_testing = c(avnnetPR_all[2])
-quartz()
-ggplot(avNNetModel, metric='Rsquared')
-out_name = paste("nnet_pred_obs", as.numeric(as.POSIXct(Sys.time())), ".png")
-trellis.device(device="png", width=8, height=5, units="in", filename=out_name, res=100)
-print(plot(df_noNA$year, df_noNA$yield, type='l', col=2))
-print(lines(df_noNA$year, avnnetPred_all, col=3))
-print(legend(x='topleft',c('actual', 'predicted'), fill=2:3))
-dev.off()
 
-ggplot(avNNetModel, metric="Rsquared") + ggtitle("Performance of average neural network model")        
-ggsave("avgnnet_rsqr.png", width=8, height=5, units="in", dpi=100)
+res = as.data.frame(cbind(pred_train$year, yield_train, avNNetPred))
+colnames(res) = c("Year", "Actual", "Predicted")
+res = melt(res, id.vars = "Year")
+ggplot(res, aes(Year,value,col=variable)) + geom_line() + ggtitle("Training performance for NN model")
+ggsave("avgnnet_training.png", width=8, height=5, units="in", dpi=200)
+
+ggplot(avNNetModel, metric="Rsquared") + ggtitle("Parameter tuning of average neural network model")        
+ggsave("avgnnet_rsqr.png", width=8, height=5, units="in", dpi=200)
+
+res = as.data.frame(cbind(pred_test$year, yield_test, avnnetPred_all))
+colnames(res) = c("Year", "Actual", "Predicted")
+res = melt(res, id.vars = "Year")
+ggplot(res, aes(Year,value,col=variable)) + geom_line() + ggtitle("Validation performance for NN model")
+ggsave("avgnnet_validate.png", width=8, height=5, units="in", dpi=200)
 
 library(doMC)
 registerDoMC(cores=4)
@@ -69,38 +74,60 @@ marsGrid = expand.grid(.degree=1:2, .nprune=2:38)
 marsModel = train(x=pred_train, y=yield_train,
                   trControl = fitControl, preProcess = preproc_arguments,
                   method = "earth", tuneLength = 20,
-                   tuneGrid = marsGrid)
-anfisPreds = predict(marsModel, newdata=pred_test)
+                  tuneGrid = marsGrid)
 
-res = as.data.frame(cbind(pred_test$year, yield_test, anfisPreds))
-res = melt(res, id.vars = "V1")
+anfisPreds = predict(marsModel, newdata=pred_train)
+anfispostResample = postResample(pred=anfisPreds, obs=yield_train)
+rmses_training = c(rmses_training, anfispostResample[1])
+r2s_training = c(r2s_training, anfispostResample[2])
+
+res = as.data.frame(cbind(pred_train$year, yield_train, anfisPreds))
+colnames(res) = c("Year", "Actual", "Predicted")
+res = melt(res, id.vars = "Year")
 quartz()
-ggplot(marsModel, metric="Rsquared")
-quartz()
-ggplot(res, aes(V1,value,col=variable)) + geom_line() + ggtitle("Validation performance for MARS model")
-marsPred_all = predict(marsModel, newdata=df_predictors)
-res = as.data.frame(cbind(df_predictors$year, df_yield, marsPred_all))
-res = melt(res, id.vars ="V1")
-quartz()
-ggplot(res, aes(V1, value, col=variable)) + geom_line() + ggtitle("Training + Validation Data combined performance for MARS")
+ggplot(marsModel, metric="Rsquared") + ggtitle("Parameter tuning for MARS model")
+ggsave("mars_rsqr.png", width=8, height=5, units="in", dpi=200)
+ggplot(res, aes(Year,value,col=variable)) + geom_line() + ggtitle("Training performance for MARS model")
+ggsave("mars_training.png", width=8, height=5, units="in", dpi=200)
 
-## Neural network with multiple layers
-paramGrid <- expand.grid(.layer1 = c(10,9,8,7), .layer2 = c(6,5,4), .layer3 = c(1,2,3));
-nnetModel = train(x=pred_train, y=yield_train, trControl = fitControl,
-                  preProcess=preproc_arguments, method="neuralnet",
-                  tuneLength=5, tuneGrid = paramGrid)
+marsPred_all = predict(marsModel, newdata=pred_test)
+marsPostResample = postResample(pred=marsPred_all, obs = yield_test)
+rmses_testing = c(rmses_testing, marsPostResample[1])
+r2s_testing = c(r2s_testing, marsPostResample[2])
 
-nnet_preds = predict(nnetModel, newdata=pred_test)
-res = as.data.frame(cbind(pred_test$year, yield_test, nnet_preds ))
-colnames(res) = c("year", "actual", "nnet_prediction")
-res = melt(res, id.vars = "V1")
-quartz()
-ggplot(nnetModel, metric="Rsquared")
-quartz()
-ggplot(res, aes(V1, value, col=variable)) + geom_line() + ggtitle("Validation performance for ML NN")
+res = as.data.frame(cbind(pred_test$year, yield_test, marsPred_all))
+colnames(res) = c("Year", "Actual", "Predicted")
+res = melt(res, id.vars ="Year")
+ggplot(res, aes(Year, value, col=variable)) + geom_line() + ggtitle("Validation Data performance for MARS")
+ggsave("mars_validate.png", width=8, height=5, units="in", dpi=200)
 
 
+res_training = data.frame( rmse=rmses_training, r2=r2s_training )
+rownames(res_training) = methods
+training_order = order( -res_training$rmse )
+res_training = res_training[ training_order, ] # Order the dataframe so that the best results are at the bottom:
+print( "Final Training Results" )
+print( res_training )
 
+library(Hmisc)
+latex(res_training, file="train_results.tex")
+
+res_testing = data.frame( rmse=rmses_testing, r2=r2s_testing )
+rownames(res_testing) = methods
+res_testing = res_testing[ training_order, ] # Order the dataframe so that the best results for the training set are at the bottom:
+print( "Final Testing Results" ) 
+print( res_testing )
+
+latex(res_testing, file="testing_results.tex")
+
+resamp = resamples( list(mars=marsModel, avnnet=avNNetModel) )
+resamp_sum = summary(resamp)
+library(lattice)
+bwplot(resamp, scales="free")
+dotplot(resamp, scales="free")
+parallelplot(resamp, metric="RMSE")
+
+stargazer(marsModel)
 
 ## install.packages('forecast')
 library(neuralnet)

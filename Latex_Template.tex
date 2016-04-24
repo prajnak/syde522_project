@@ -253,7 +253,7 @@
 
 
 % *** SUBFIGURE PACKAGES ***
-%\usepackage[tight,footnotesize]{subfigure}
+% \usepackage[tight,footnotesize]{subfigure}
 % subfigure.sty was written by Steven Douglas Cochran. This package makes it
 % easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
 % work, it is a good idea to load it with the tight package option to reduce
@@ -326,7 +326,7 @@
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
-%\usepackage{url}
+\usepackage{url}
 % url.sty was written by Donald Arseneau. It provides better support for
 % handling and breaking URLs. url.sty is already installed on most LaTeX
 % systems. The latest version can be obtained at:
@@ -437,17 +437,179 @@ The main goal of this report is to evaluate the accuracy of context unaware stat
 
 \section{Data and Methods}
 \subsection{Datasets}
-Data was obtained from the World Bank's data on socioeconomic indicators for all countries in the world. This data includes historical agricultural indicators like crop yields, fertilizers used, agriculture related carbon dioxide, nitrogen dioxide emissions and extensive climate data going back to 1901.
+Data was obtained from the World Bank's data on socioeconomic indicators for all countries in the world \cite{World39:online}. This data includes historical agricultural data like crop yields, fertilizers used, agriculture related carbon dioxide, nitrogen dioxide emissions and extensive climate data going back to 1901. The data was accessed using their web interface and via the R packages \emph{rWBclimate} \cite{rwbclim2014} and \emph{WDI} \cite{wdipack}. 
 
-The crop yield data obtained was for annual cereal production in India from 1961 to 2013. Cereals are a plant family consisting primarily of wheat, oats and corn. 
+The crop yield data obtained was for annual cereal production in India from 1961 to 2013. Cereals are a plant family consisting primarily of wheat, oats and corn. Monthly temperature and precipitation data at a national scale was also obtained from 1961-2013 and a subset of this data corresponding to primary agricultural seasons in India was taken to be used for training purposes. A summary of the collected data is available in Table \ref{tab:summ}
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Sat, Apr 23, 2016 - 19:36:35
+\begin{table}[!htbp] \centering 
+\resizebox{0.5\textwidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
+\hline \\[-1.8ex] 
+land & 53 & 100,044,223.600 & 3,429,131.695 & 92,239,016 & 106,613,208 \\ 
+year & 54 & 1,986.500 & 15.732 & 1,960 & 2,013 \\ 
+yield & 53 & 1,759.542 & 633.236 & 854.400 & 3,010.000 \\ 
+machines & 49 & 16.291 & 1.577 & 12.802 & 19.622 \\ 
+fertilizer & 12 & 144.211 & 27.629 & 100.329 & 180.748 \\ 
+temp\_rabi & 54 & 19.824 & 0.536 & 18.665 & 21.337 \\ 
+temp\_kharif & 54 & 25.973 & 0.294 & 25.481 & 26.689 \\ 
+rain\_rabi & 54 & 12.364 & 2.062 & 8.606 & 17.296 \\ 
+rain\_kharif & 54 & 186.631 & 18.292 & 140.926 & 218.241 \\ 
+\hline \\[-1.8ex] 
+\end{tabular}}
+  \caption{Summary of Data collected for this study} 
+  \label{tab:summ} 
+\end{table}
 
 \subsection{Methods}
-All data was cleaned and was preprocessed to remove 
+The use of complex classification and regression models is becoming more and more commonplace in science, finance and a myriad of other domains. Regression is concerned with modeling the relationship between variables that is iteratively refined using a measure of error in the predictions made by the model. Regression methods are a workhorse of statistics and have been cooped into statistical machine learning. This may be confusing because one can use regression to refer to the class of problem and the class of algorithm. Really, regression is a process.
+
+Mathematically, we can define the process of Regression modeling as follows. Suppose, we have an output $Y$ and a series of inputs or predictors (usually assumed to be independent variables). $$X_1, X_2, ...... X_n$$
+Then, the goals of a regression model are multiple:
+\begin{enumerate}
+    \item {examine the relationship between inputs and outputs -- Do they tend to vary together? What does the “structure” of the relationship look like? Which inputs are “important”?}
+    \item{ Given a new set of predictor values $X^{*}_1,...X^{*}_p$, what can be said about an unseen $Y^{*}$?}
+    \item { Regression tools often serve as a building block for more advanced methodologies - Smoothing by local polynomials, for example, involves fitting lots of regression models "locally", while iteratively fitting weighted regressions is at the heart of the standard computations for generalized linear models}
+\end{enumerate}
+Machine learning is a subfield of computer science that evolved from the study of pattern recognition and computational learning theory in artificial intelligence. Machine learning explores the study and construction of algorithms that can learn from and make predictions on data. Such algorithms operate by building a model from example inputs in order to make data-driven predictions or decisions, rather than following strictly static program instructions.
+
+Regression analysis is widely used for prediction and forecasting, where its use has substantial overlap with the field of machine learning. Regression analysis is also used to understand which among the independent variables are related to the dependent variable, and to explore the forms of these relationships. In restricted circumstances, regression analysis can be used to infer causal relationships between the independent and dependent variables. However this can lead to illusions or false relationships, so caution is advisable; for example, correlation does not imply causation. In a narrower sense, regression may refer specifically to the estimation of continuous response variables, as opposed to the discrete response variables used in classification. The case of a continuous output variable may be more specifically referred to as metric regression to distinguish it from related problems.
+
+The dataset summarized in Table \ref{tab:summ} was placed into a data frame in R. A data frame is a glorified matrix that allows easy indexing for splitting and identifying data pertaining to separate trials or conditions. A sample of the dataset is provided in Table \ref{tab:headdat}. For the purposes of this problem, the \emph{yield} column from Table \ref{tab:headdat} is the desired target variable we are trying to predict. All the other variables are to be sued as predictors.
+
+A convenience function provided by \textit{caret}, \textit{nearZeroVar} was then used to determine a few non useful predictor variables and these were excluded from the predictors for testing and training datasets. These so-called near zero-variance predictors can cause problems during resampling for some models such as linear regression \cite{Kuhn2008}. Other variables like agricultural machines and fertilizer intakes were dropped from the final dataset since sufficient data was not enough to account for the entire temporal range being considered for this study: 1961-2013. Although, methods that either help extrapolate missing data in sequences like Markov Chain Models and statistical models that can work with incomplete data exist, their applicability was deemed to be out of scope for this study in light of time constraints. 
+\begin{table}[!htbp] \centering 
+\resizebox{0.5\textwidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}} cccccccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & land & year & yield & machines & fertilizer & temp\_rabi & temp\_kharif & rain\_rabi & rain\_kharif \\ 
+\hline \\[-1.8ex] 
+1 & $99,190,000$ & $2,013$ & $2,963.400$ & $$ & $157.522$ & $18.665$ & $25.560$ & $11.828$ & $197.899$ \\ 
+2 & $97,440,000$ & $2,012$ & $3,010$ & $$ & $164.783$ & $18.906$ & $25.742$ & $14.045$ & $192.931$ \\ 
+3 & $100,625,700$ & $2,011$ & $2,860.700$ & $18.535$ & $180.748$ & $19.837$ & $25.938$ & $13.910$ & $215.299$ \\ 
+4 & $100,075,800$ & $2,010$ & $2,676.400$ & $19.052$ & $179.036$ & $21.337$ & $26.634$ & $11.362$ & $173.963$ \\ 
+5 & $97,171,600$ & $2,009$ & $2,580.800$ & $19.622$ & $167.457$ & $20.006$ & $26.197$ & $13.955$ & $182.970$ \\ 
+6 & $101,155,500$ & $2,008$ & $2,637.900$ & $17.906$ & $153.349$ & $20.187$ & $26.386$ & $13.174$ & $197.289$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular}}
+  \caption{Sample rows from the data frame} 
+  \label{tab:headdat} 
+\end{table} 
+
+Table \ref{tab:headdat}, curiously shows two sets of features for rainfall and weather respectively: rain\_kharif, rain\_rabi, temp\_kharif, temp\_rabi. The agricultural crop year in India is from July to June. The Indian cropping season is classified into two main seasons-(i) Kharif and (ii) Rabi based on the monsoon. The kharif cropping season is from July –October during the south-west monsoon and the Rabi cropping season is from October-March (winter). The crops grown between March and June are summer crops. Pakistan and Bangladesh are two other countries that are using the term ‘kharif’ and ‘rabi’ to describe about their cropping patterns. The terms ‘kharif’ and ‘rabi’ originate from Arabic language where Kharif means autumn and Rabi means spring \cite{Cropp54:online}. Thus, the 4 climatic variables in the datasets correspond to the cultivation seasons are are means of the monthly values over the respective months in which they are applicable.
+
+\subsection{Data Pre-processing}
+In the field of statistical data analysis, one of the first tasks is to determine how much of the finite dataset is to be used for model training while ensuring a certain portion of the dataset is kept aside for testing the efficacy of the model after training. Thus, it is important to ensure that a model being trained never gets exposed to the split testing /validation dataset. This is a very good measure of determining how well the model would perform when being used in real life. The main function of the test split dataset is to compare and evaluate performance across models, as most statistical models are actually combinations of localized models.
+
+The \textit{caret} package, specifically has a \textit{createDataPartition} function, that analyses a dataset's characteristics such as multivariate correlation and determines the most randomized way to split the dataset. For regression, the function determines the quartiles of the data set and samples within those groups. Thus, 70\% of the dataset was randomly sampled to be used as the training data. The rest of the 30\% of the dataset was then used to evaluate the performance of the models, hereafter known as the testing data or validation data. 
+\subsection{Tuning and building models}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.5\textwidth]{training}
+\caption{Standard operating procedure to tune a model's parameters \cite{Model99:online}}
+\label{training}
+\end{figure}
+
+The general process that needs to be followed to do efficient parameter tuning while building a model is shown in Figure. \ref{training}. The \textit{caret} package has several functions that streamline the process of model building, tuning and evaluation. The \textit{train} function can be used to 
+\begin{itemize}
+\item {Evaluate, using resampling the effects of model parameter tuning on performance}
+\item {Choose the optimal model across these parameters}
+\item{Estimate model performance from a training set}\cite{Model99:online}
+\end{itemize}
+
+\subsubsection{Neural Networks}
+% \begin{figure}[!h]
+%     \centering
+%     \includegraphics[width=0.4\textwidth]{anns}
+%     \caption{A neural network (a deep learning tool) \cite{What93:online}}
+%     \label{anns}
+% \end{figure}
+Artificial Neural networks are computing systems made up of a number of simple, highly interconnected processing elements, which process information by their dynamic state response to external inputs. Neural networks are typically organized in layers. Layers are made up of a number of interconnected 'nodes' which contain an 'activation function'. Patterns are presented to the network via the 'input layer', which communicates to one or more 'hidden layers' where the actual processing is done via a system of weighted 'connections'. The hidden layers then link to an 'output layer' where the answer is output. FOr this study, one hidden layer was used with the number of hidden layer neurons being a parameter that is tuned for. An ANN maybe described by two parameters, size and decay. Its performance can be evaluated using regression plots, and RMSE and the coefficient of determination, $R^2$, which is a measure of how well the model was able to predict each sample.
+
+\subsubsection{Multiple Adaptive Regressive Splines (MARS)}
+MARS is a form of regression analysis introduced by Jerome H. Friedman in 1991. It is a non-parametric regression technique and can be seen as an extension of linear models that automatically models nonlinearities and interactions between variables. The MARS model is a weighted sum of Basis functions, $$f(x) = \sum_{1=1}^{k}c_i B_i(x)$$ \cite{friedman1991multivariate}. $c_i$ is a constant coefficient. Each basis function can take three different forms - a constant, a hinge function and a product of two or more hinge functions.
+
+MARS models may also be evaluated using the standard regression measures RMSE and the coefficient of determination, $R^2$
+
 \section{Results and Discussion}
+\subsection{Results}
+Figures \ref{res:ann_tune} and \ref{res:ann_train} show the parameter tuning performance and training performance of the neural network used on the dataset. As can be seen, the model fits the training data pretty good with RMSE errors staying pretty low and the coefficient of regression fit, $R^2$, at around 0.98. One might be inclined to argue that such good of a fit might point towards over-fitting, which would very well have been true if not for the k-fold cross validation used during the training process which ensures none of the model parameters have been chosen to account for a specific data point
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{avgnnet_rsqr.png}
+    \caption{Parameter tuning results for Neural network}
+    \label{res:ann_tune}
+\end{figure}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{avgnnet_training.png}
+    \caption{Training results for NN}
+    \label{res:ann_train}
+\end{figure}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{avgnnet_validate.png}
+    \caption{Validation results for NN}
+    \label{res:ann_test}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{mars_rsqr.png}
+    \caption{Parameter tuning results for MARS}
+    \label{res:mars_tune}
+\end{figure}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{mars_training.png}
+    \caption{Training results for MARS}
+    \label{res:mars_train}
+\end{figure}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{mars_validate.png}
+    \caption{Validation results for MARS}
+    \label{res:mars_test}
+\end{figure}
+\clearpage
+The following tables summarize the RMSE and $R^2$ results for the training (Table \ref{tab:res_train}) and testing (Table \ref{tab:res_test}) data-splits for both MARS and Neural Networks. As is obvious from them, both models had extremely similar performance in fitting the validation data to the model. The low RMSE values, which range from 4-8\% of the mean yield value, indicate really good performance for these models. 
+%latex.default(res_training, file = "train_results.tex")%
+\begin{table}[!tbp]
+\begin{center}
+\begin{tabular}{lrr}
+\hline\hline
+\multicolumn{1}{l}{res}&\multicolumn{1}{c}{rmse}&\multicolumn{1}{c}{r2}\tabularnewline
+\hline
+AvgNN&$71.8543768205759$&$0.986877633023676$\tabularnewline
+MARS&$41.7083829642748$&$0.995445879757786$\tabularnewline
+\hline
+\end{tabular}\end{center}
+\label{tab:res_train}
+\caption{RMSE and $R^2$ results for training}
+\end{table} 
+
+%latex.default(res_testing, file = "testing_results.tex")%
+\begin{table}[!tbp]
+\begin{center}
+\begin{tabular}{lrr}
+\hline\hline
+\multicolumn{1}{l}{res}&\multicolumn{1}{c}{rmse}&\multicolumn{1}{c}{r2}\tabularnewline
+\hline
+AvgNN&$105.0088152187575$&$0.975009493599273$\tabularnewline
+MARS&$ 95.1923222679583$&$0.981305690867502$\tabularnewline
+\hline
+\end{tabular}\end{center}
+\label{tab:res_test}
+\caption{RMSE and $R^2$ results for testing}
+\end{table}
 
 \section{Summary and Conclusions}
- 
-
+In conclusion, we found that the models trained here, based on neural networks and Multiple Adaptive Regressive Splines, 
 % use section* for acknowledgement
 \section*{Acknowledgment}
 

@@ -139,7 +139,8 @@ get_historical_precip(c("IND"), "month")
 #methane_emission = WDI(indicator = 'EN.ATM.NOXE.AG.KT.CE', country=c('IN'), start=1960, end=2013)
 #df_cereal$methane = methane_emission$EN.ATM.METH.AG.KT.CE
 
+install.packages("stargazer")
+library(stargazer)
 
-
-
+stargazer(df_cereal)
 save(df_cereal, file='df_Cereal.RData')
